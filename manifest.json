@@ -1,0 +1,16 @@
+{
+  "name": "Radio Chécheres EN VIVO",
+  "short_name": "Chécheres Vivo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#e94560",
+  "description": "Escucha Radio Chécheres en vivo y en directo.",
+  "icons": [
+    {
+      "src": "https://blogger.googleusercontent.com/img/a/AVvXsEjx3JuBxDCvIiaIpz4aKs9Rus1zmn5SG87x7UlLix8kfWk2lNx7fgXCErhDq-k52DjiLZkjatH-hSazIyZxYC5LBOzEolxbkif3zrm7iiuwT1WFC1duaLM4aaIMmO-IXVaAP6vOpg72AHLw1_wCXXxcTTRxf2RuwuvNGHXAMXQw-j8oTKwyrVw8a6HI2xQ",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
