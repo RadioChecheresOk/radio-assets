@@ -1,0 +1,1188 @@
+<div id="ww_44275d39b64ed" v='1.3' loc='auto' a='{"t":"ticker","lang":"es","sl_lpl":1,"ids":["wl3632"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"#D32F2F","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#FFFFFF","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FFFFFF"}'>
+        Más previsiones: <a href="https://oneweather.org/es/seville/25_days/" id="ww_44275d39b64ed_u" target="_blank">https://oneweather.org/es/seville/25_days/</a>
+      </div>
+      <script async="async" src="https://app3.weatherwidget.org/js/?id=ww_44275d39b64ed"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Código Inicia Cover -->
+
+
+
+<style>
+  /* IMPORTAR POPPINS */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+  /* ESTILOS PRINCIPALES */
+  .program-schedule {
+    transform: scale(1.05);
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -1.03px;
+  }
+
+  /* CONTENEDOR DE DÍAS (ahora solo muestra uno) */
+  .days-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 5px;
+  }
+
+  /* ESTILOS DE DÍA */
+  .day-box {
+    min-width: 120px;
+    height: 599px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 1;
+    max-width: 3840px;
+  }
+
+  /* IMAGEN DE FONDO CON HOVER */
+  .day-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease;
+  }
+
+  /* GRADIENTE QUE OCUPA TODO EL ANCHO */
+  .day-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 59%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.93) 10%,      /* Parte inferior: negra casi sólida (95% opacidad) */
+        rgba(0, 0, 0, 0.8) 60%,      /* Mitad: negro intenso (70% opacidad) */
+        rgba(0, 0, 0, 0.5) 80%,      /* Superior: negro muy transparente (20% opacidad) */
+        transparent 100%);
+    z-index: 1;
+  }
+
+  .day-box:hover .day-bg-image {
+    filter: brightness(1.4) drop-shadow(0 0 0 #e94560);
+    box-shadow: inset 0 0 0 1000px rgba(233, 69, 96, 0.5);
+  }
+
+  /* ESTILOS PARA "AHORA" - ALINEACIÓN IZQUIERDA */
+  .now-playing {
+    color: white;
+    position: absolute;
+    bottom: 27%;
+    left: 350px;
+    display: flex;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: -0px;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+    z-index: 2;
+    max-width: 1200px;
+  }
+
+  /* ESTILOS PARA MÓVIL */
+  @media (max-width: 768px) {
+    .day-box {
+    transform: scale(1.01);
+
+      min-width: 100px;
+      height: 370px;
+    }
+    .day-gradient {
+      height: 50%;
+
+
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 10%,      /* Parte inferior: negra casi sólida (95% opacidad) */
+        rgba(0, 0, 0, 0.8) 60%,      /* Mitad: negro intenso (70% opacidad) */
+        rgba(0, 0, 0, 0.5) 80%,      /* Superior: negro muy transparente (20% opacidad) */
+        transparent 100%);
+    z-index: 1;
+
+
+
+
+    }
+    .now-playing {
+      left: 15px;
+      padding: 12px;
+      bottom: 5%;
+      max-width: 90%;
+      font-size: 11px !important;
+    }
+    .live-badge, .now-playing span:not(.live-badge) {
+      font-size: 12px !important;
+      margin-bottom: 5px;
+    }
+    .program-title {
+      font-size: 27px !important;
+      line-height: 1.7;
+      letter-spacing: -1px;
+      margin: 5px 0;
+    }
+    .program-time {
+      font-size: 11px !important;
+      margin-top: 5px;
+    }
+    .program-title::after {
+      display: none !important;
+    }
+  }
+
+  .live-badge {
+    background-color: #e94560;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: -0px;
+    margin-bottom: 0px;
+    display: inline-block;
+    margin-right: 3px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+.program-title {
+    font-size: 59px;
+    font-weight: bold;
+    margin-top: 0;
+    letter-spacing: -2px;
+    position: relative;
+    display: inline-block;
+    /* Nuevas propiedades añadidas */
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el texto que se desborda */
+    text-overflow: ellipsis; /* Añade "..." si el texto es muy largo */
+    max-width: 100%; /* Limita el ancho al contenedor padre */
+}
+
+@media (max-width: 768px) {
+    .program-title {
+        font-size: 27px !important;
+        /* Asegurar que se mantenga en una línea */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+}
+
+  .program-time {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: -0px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -9px;
+    margin-bottom: -2px;
+  }
+
+  /* EFECTO BARRA INFERIOR AJUSTADA AL TEXTO */
+  .program-title::after {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    width: 0;
+    height: 10px;
+    background-color: #e94560;
+    transition: width 0.3s ease;
+  }
+
+  .day-box:hover .program-title::after {
+    width: 100%;
+  }
+
+  /* Mensaje cuando no hay programación */
+  .no-program {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    margin-top: 50px;
+  }
+</style>
+
+<div class="program-schedule">
+  <div class="days-container">
+    <!-- Contenido generado por JavaScript -->
+  </div>
+</div>
+
+<script>
+//<![CDATA[
+  // CONFIGURACIÓN COMPLETA DE PROGRAMACIÓN
+  const scheduleProgramming = {
+    // Programas diarios (se repiten igual todos los días)
+
+
+
+    programasDiarios: [
+      
+
+
+
+{
+        nombre: "RELATOS INESPERADOS",
+        horario: "21:00 - 22:00",
+        dias: ["domingo", "lunes", "martes", "miércoles", "jueves"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEgoouJ8zJ6izRui1Xm50sHMl7s4tD7fNhGAejVIiyyyZhBIq723uw_EFtgCj_mhJXU4JKx0SJEFKonkMEKmfG8ppyAJiHP3WhfORPIyNd75_0wutQEsynxO1iQlqjVqZlZIqQ3IQdg3F9z26tl6KloEkGEKm4bJMprl7ozunPk33E05HJ1lOA99MEPEGX0"
+      },
+
+
+
+{
+        nombre: "MAÑANAS ROCK",
+        horario: "6:00 - 12:00",
+        dias: ["lunes", "martes", "miércoles", "jueves", "viernes"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjjhy6AgEZ5j6OrrNBcA5RtwxkuerprDI12WlSXc8IdVgHrLJC_FoZJAv3d9aY5CzgkxyM_0FS-ycRjxk8Zcv4HsjYsiNsZQu3oxCF4liZnHE2yDhyACndenXDw5ZJnLv1DRqcrdYyI48hk-jsmqeXHb0aswWoIrbPW8ZblZLfxEvt2jeRYV8Xqiv1Zpqo"
+      },
+
+
+{
+        nombre: "SÁBADOS ROCK & POP",
+        horario: "6:00 - 9:00",
+        dias: [ "sábado"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjjhy6AgEZ5j6OrrNBcA5RtwxkuerprDI12WlSXc8IdVgHrLJC_FoZJAv3d9aY5CzgkxyM_0FS-ycRjxk8Zcv4HsjYsiNsZQu3oxCF4liZnHE2yDhyACndenXDw5ZJnLv1DRqcrdYyI48hk-jsmqeXHb0aswWoIrbPW8ZblZLfxEvt2jeRYV8Xqiv1Zpqo"
+      },
+
+
+
+{
+        nombre: "SÁBADOS ROCK & POP",
+        horario: "11:00 - 12:00",
+        dias: [ "sábado"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjjhy6AgEZ5j6OrrNBcA5RtwxkuerprDI12WlSXc8IdVgHrLJC_FoZJAv3d9aY5CzgkxyM_0FS-ycRjxk8Zcv4HsjYsiNsZQu3oxCF4liZnHE2yDhyACndenXDw5ZJnLv1DRqcrdYyI48hk-jsmqeXHb0aswWoIrbPW8ZblZLfxEvt2jeRYV8Xqiv1Zpqo"
+      },
+
+
+
+
+{
+        nombre: "DOMINGOS ROCK & POP",
+        horario: "6:00 - 7:00",
+        dias: [ "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjjhy6AgEZ5j6OrrNBcA5RtwxkuerprDI12WlSXc8IdVgHrLJC_FoZJAv3d9aY5CzgkxyM_0FS-ycRjxk8Zcv4HsjYsiNsZQu3oxCF4liZnHE2yDhyACndenXDw5ZJnLv1DRqcrdYyI48hk-jsmqeXHb0aswWoIrbPW8ZblZLfxEvt2jeRYV8Xqiv1Zpqo"
+      },
+
+
+
+
+{
+        nombre: "DOMINGOS ROCK & POP",
+        horario: "11:00 - 12:00",
+        dias: [ "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjjhy6AgEZ5j6OrrNBcA5RtwxkuerprDI12WlSXc8IdVgHrLJC_FoZJAv3d9aY5CzgkxyM_0FS-ycRjxk8Zcv4HsjYsiNsZQu3oxCF4liZnHE2yDhyACndenXDw5ZJnLv1DRqcrdYyI48hk-jsmqeXHb0aswWoIrbPW8ZblZLfxEvt2jeRYV8Xqiv1Zpqo"
+      },
+
+
+
+
+{
+        nombre: "TIEMPO DE JAZZ AM",
+        horario: "5:00 - 6:00",
+        dias: ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhqBE0WFMwMV_lcQLmyBVoi3KALtnCDAf5cv8ynsB1bo9opRaK_WPAlzBenCX3m_vqoHGvatt8Cw31-cXrBm4qYvnpIXReDzYEc-PELke8CtIC-U9mYpw1f2iTpyFqXNvoUEJEUyLEetOQvfGRhbIt7ApizLxnGtjbqAwqE7de_QSTaKymg3gWrrn-NUgQ"
+      },
+
+{
+        nombre: "TIEMPO DE JAZZ PM",
+        horario: "12:00 - 13:00",
+        dias: ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhqBE0WFMwMV_lcQLmyBVoi3KALtnCDAf5cv8ynsB1bo9opRaK_WPAlzBenCX3m_vqoHGvatt8Cw31-cXrBm4qYvnpIXReDzYEc-PELke8CtIC-U9mYpw1f2iTpyFqXNvoUEJEUyLEetOQvfGRhbIt7ApizLxnGtjbqAwqE7de_QSTaKymg3gWrrn-NUgQ"
+      },
+
+
+
+
+{
+        nombre: "DISCO MIX CLUB",
+        horario: "18:00 - 19:00",
+        dias: [ "viernes"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhHj36CYRoMLegc0-nJ7N90Fp5-oUaNAzw1LmXzC1wPpPW6RKlpTnX-v3iqx8d3VdPy9OjyplQ_WPE447-jG_rdHXdqWmOOzs_TwOziXJAVyAv-9WxjMsEij-UfyOasKfEngBuQmAiW6FNjC8-9gWJ7gveoaFnRWSwoo81Tnt1zPAVAfh4WmysYwI89pPI"
+      },
+
+
+{
+    nombre: "DISCO MIX CLUB",
+    horario: "22:00 - 24:00",  // Viernes (hasta media noche)
+    dias: ["viernes"],         // Solo viernes
+    imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhHj36CYRoMLegc0-nJ7N90Fp5-oUaNAzw1LmXzC1wPpPW6RKlpTnX-v3iqx8d3VdPy9OjyplQ_WPE447-jG_rdHXdqWmOOzs_TwOziXJAVyAv-9WxjMsEij-UfyOasKfEngBuQmAiW6FNjC8-9gWJ7gveoaFnRWSwoo81Tnt1zPAVAfh4WmysYwI89pPI"
+},
+{
+    nombre: "DISCO MIX CLUB",  // Mismo nombre
+    horario: "00:00 - 02:00",  // Sábado (de 12 AM a 2 AM)
+    dias: ["sábado"],          // Solo sábado
+    imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhHj36CYRoMLegc0-nJ7N90Fp5-oUaNAzw1LmXzC1wPpPW6RKlpTnX-v3iqx8d3VdPy9OjyplQ_WPE447-jG_rdHXdqWmOOzs_TwOziXJAVyAv-9WxjMsEij-UfyOasKfEngBuQmAiW6FNjC8-9gWJ7gveoaFnRWSwoo81Tnt1zPAVAfh4WmysYwI89pPI"
+},
+
+
+
+{
+    nombre: "DISCO MIX CLUB",
+    horario: "19:00 - 24:00",  // Viernes (hasta media noche)
+    dias: ["sábado"],         // Solo viernes
+    imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhHj36CYRoMLegc0-nJ7N90Fp5-oUaNAzw1LmXzC1wPpPW6RKlpTnX-v3iqx8d3VdPy9OjyplQ_WPE447-jG_rdHXdqWmOOzs_TwOziXJAVyAv-9WxjMsEij-UfyOasKfEngBuQmAiW6FNjC8-9gWJ7gveoaFnRWSwoo81Tnt1zPAVAfh4WmysYwI89pPI"
+},
+{
+    nombre: "DISCO MIX CLUB",  // Mismo nombre
+    horario: "00:00 - 02:00",  // Sábado (de 12 AM a 2 AM)
+    dias: ["domingo"],          // Solo sábado
+    imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhHj36CYRoMLegc0-nJ7N90Fp5-oUaNAzw1LmXzC1wPpPW6RKlpTnX-v3iqx8d3VdPy9OjyplQ_WPE447-jG_rdHXdqWmOOzs_TwOziXJAVyAv-9WxjMsEij-UfyOasKfEngBuQmAiW6FNjC8-9gWJ7gveoaFnRWSwoo81Tnt1zPAVAfh4WmysYwI89pPI"
+},
+
+
+
+
+{
+        nombre: "TARDE INDIE",
+        horario: "13:00 - 21:00",
+        dias: ["lunes", "martes", "miércoles", "jueves"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiOyntfuhXDfVfRhvTyRfEToRQo9maUAaD1GPteuyltiRgIQ7245lrnVMMBgexWSDrp5Usf38ul7kf2ZFfCUsqimE3It3T2KUPBKIOSMk_uSJsczOmVgzrTqn3HadohQiAMKjvG4xtn1GaNBIv-Ko-1cGzuyh_i77Sl5nSsRwwNuxyLGG6f-ylzDsvKxDA"
+      },
+
+{
+        nombre: "ES VIERNES",
+        horario: "13:00 - 18:00",
+        dias: ["viernes"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiOyntfuhXDfVfRhvTyRfEToRQo9maUAaD1GPteuyltiRgIQ7245lrnVMMBgexWSDrp5Usf38ul7kf2ZFfCUsqimE3It3T2KUPBKIOSMk_uSJsczOmVgzrTqn3HadohQiAMKjvG4xtn1GaNBIv-Ko-1cGzuyh_i77Sl5nSsRwwNuxyLGG6f-ylzDsvKxDA"
+      },
+
+
+{
+        nombre: "SÁBADOS ROCK & POP",
+        horario: "15:00 - 16:00",
+        dias: ["sábado"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiOyntfuhXDfVfRhvTyRfEToRQo9maUAaD1GPteuyltiRgIQ7245lrnVMMBgexWSDrp5Usf38ul7kf2ZFfCUsqimE3It3T2KUPBKIOSMk_uSJsczOmVgzrTqn3HadohQiAMKjvG4xtn1GaNBIv-Ko-1cGzuyh_i77Sl5nSsRwwNuxyLGG6f-ylzDsvKxDA"
+      },
+
+{
+        nombre: "SÁBADOS ROCK & POP",
+        horario: "17:00 - 19:00",
+        dias: ["sábado"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiOyntfuhXDfVfRhvTyRfEToRQo9maUAaD1GPteuyltiRgIQ7245lrnVMMBgexWSDrp5Usf38ul7kf2ZFfCUsqimE3It3T2KUPBKIOSMk_uSJsczOmVgzrTqn3HadohQiAMKjvG4xtn1GaNBIv-Ko-1cGzuyh_i77Sl5nSsRwwNuxyLGG6f-ylzDsvKxDA"
+      },
+
+{
+        nombre: "DOMINGOS ROCK & POP",
+        horario: "15:00 - 16:00",
+        dias: ["domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiOyntfuhXDfVfRhvTyRfEToRQo9maUAaD1GPteuyltiRgIQ7245lrnVMMBgexWSDrp5Usf38ul7kf2ZFfCUsqimE3It3T2KUPBKIOSMk_uSJsczOmVgzrTqn3HadohQiAMKjvG4xtn1GaNBIv-Ko-1cGzuyh_i77Sl5nSsRwwNuxyLGG6f-ylzDsvKxDA"
+      },
+
+
+     { 
+            nombre: "CAFÉ CLUB SN", 
+            horario: "18:00-20:00", 
+        dias: ["domingo"],
+            imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhheUzOkMp3On81h9VzHjQO_Z-z7kQctoChHjHKasDZQPuuzOfWJ0j4XflNgVpJrRwmNOK2e59dXhu0JqfByPo-ThvYznWQS-MS547FfN1l5HhcRWoRPGXUOTT56NCSL-k_-F1DE-MAylC1OF06FJY89J4tAhGkDNYJpAD80X92NfYmweNtKYG-69DYKNc"
+        },
+
+
+     { 
+            nombre: "DOMINGOS ROCK & POP", 
+            horario: "20:00-21:00", 
+        dias: ["domingo"],
+            imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+
+{
+        nombre: "NOCHE ALTERNA",
+        horario: "22:00 - 24:00",
+        dias: ["domingo", "lunes", "martes", "miércoles", "jueves"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEiNxNItw5_6Y91_DW7aJJdqViI2822b6BCGY7WOKwXeWjC9N1aRKlWiTYkZnz2dZYx4CB758NJUvdj-xtTEqbPP4d_4LvVFLS0sm7KFYHZFhSnxfG1OJ61NgqfGFxsu-MglCg-cbcJCDh1L8PVxnTHYsOGK18-WwkcdPQpxKsvqkPjU0TBoiJFDEyxOS_8"
+      },
+
+
+
+
+
+{
+        nombre: "NOCHE CLÁSICA",
+        horario: "0:00 - 5:00",
+        dias: ["viernes", "lunes", "martes", "miércoles", "jueves"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjuwHQN7YRATOn6nkWdrqXbKzBqwT-V5b6Y5YPazFuSU41Phr9TWs_BOkGE-8rco4aon2Nu0v6dhZaieQLs6MGnH7r4BPavRtRwDFB6sy9XSuYfwSG2hLTZjn8ne71kEj1YTTfc0i1zvge0hXSimSjgoWtWS7LTkCBTZpK3zu9ybowZL7XcwCt-bQUeeAs"
+      },
+
+
+{
+        nombre: "NOCHE CLÁSICA",
+        horario: "2:00 - 5:00",
+        dias: ["sábado", "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjuwHQN7YRATOn6nkWdrqXbKzBqwT-V5b6Y5YPazFuSU41Phr9TWs_BOkGE-8rco4aon2Nu0v6dhZaieQLs6MGnH7r4BPavRtRwDFB6sy9XSuYfwSG2hLTZjn8ne71kEj1YTTfc0i1zvge0hXSimSjgoWtWS7LTkCBTZpK3zu9ybowZL7XcwCt-bQUeeAs"
+      },
+
+
+ {
+        nombre: "LA CUEVA DEL ROCK",
+        horario: "19:00 - 22:00",
+        dias: ["viernes"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEjQTzefBIpdOGORm44Qgw53IEPaAIEpyPZUDl7ASFIz36DGlWfKLsXHkyTLe5kp-1SL24fuZkzskPSCLxCouJfa8UsBG1HcxnNVQX8K2M0HQkFEWVL6HXySy_1esbEi2YXyjGS6vIhJT9AamqSvTEZBkq-N2deDVf1OGjrgI_cphZGF7-ys8gv3uITsHco"
+      },
+
+
+
+
+{
+        nombre: "LA MAQUINA DEL TIEMPO",
+        horario: "16:00 - 17:00",
+        dias: ["sábado"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEidX35CBqYTgaNJe50STEKQj0Ene8wAGE2P9jG-CkCjiKDjE4AccovtFbnpn_Lg5EV2j3w6OftG5lAtCXwIvEHJkq50wW92wNEsW4FAJFwqHANx9gA6Wuu9iOEIcokM28yGraEdHtrIz_V9nIKDG8FtM4O4xBBmXu_MHd4j1b-f5bHambebzlasropKMBk"
+      },
+
+
+{
+        nombre: "SUSPENDIDOS EN EL TIEMPO",
+        horario: "16:00 - 18:00",
+        dias: ["domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEhPKrqkT1U3qXLnr38mgSD99cUV460qPja-_eicWYxHpYKPQNeJAmh-RF2nI7N6LYMF8RQdwKPkcTmrxo047bAR0BnZ7_znlks3bO5bT6vpx5Egt-Y6vOGlgWT8av6ExSMLGJgyxeZuPJ_PJqqbAAf4oLERazJVOPNR9i_wzpLsnT9PoThROmKDWlzYs7Q"
+      },
+
+
+
+ {
+        nombre: "OLD SCHOOL HITS MIX",
+        horario: "13:00 - 15:00",
+        dias: ["sábado", "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEj0AQY9OA8thDMbGHBzOSNVNqvHAo114dFWOszosXWZV5-9h4Upfv6IqPqLGiRU3vwF-3LLEJu6_ndXljiz4oeZm6nVr6cgYLS4fLNxY1f_yQeGo1H3yQi04xftKNwAcRtgLoWRFOyPAiViAFOY3uHBwlKTKQJ2qiwMYFoPhREDmJGvbTLctj8M-Pg5-vA"
+      },
+   
+
+      {
+        nombre: "OLD SCHOOL HITS MIX",
+        horario: "9:00 - 11:00",
+        dias: ["sábado", "domingo"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEj0AQY9OA8thDMbGHBzOSNVNqvHAo114dFWOszosXWZV5-9h4Upfv6IqPqLGiRU3vwF-3LLEJu6_ndXljiz4oeZm6nVr6cgYLS4fLNxY1f_yQeGo1H3yQi04xftKNwAcRtgLoWRFOyPAiViAFOY3uHBwlKTKQJ2qiwMYFoPhREDmJGvbTLctj8M-Pg5-vA"
+      }
+
+    ],    
+
+
+    // Programas específicos por día
+    programasEspecificos: [
+      {
+        nombre: "NOCHE EN CASA",
+        horario: "18:00 - 20:00",
+        dias: ["miércoles"],
+        imagen: "https://blogger.googleusercontent.com/img/a/AVvXsEgtW00ODH1xyMuWsIf62XB-YtgYGgsr0cPvRahtHeBGaRb-rGKZvdg0tDHjDrcv0_CmKN69yFEJ3y2kakWou8fDpf-iidvH9BSr-pLTy5YPYSGBDunkbo3Ja7mdxNBcK8pKeK4r3GOxVlSJ4EYhH3j1YXmAZnnlEQU-4oBmU5BDtiB54LnMVKoPFja6"
+      },
+      {
+        nombre: "FIN DE SEMANA",
+        horario: "7:00 - 8:00",
+        dias: ["sábado", "domingo"],
+        imagen: "https://via.placeholder.com/800x600/555/fff?text=FIN+DE+SEMANA"
+      }
+    ]
+  };
+
+  // Función para convertir hora HH:MM a minutos
+  function horaAMinutos(hora) {
+    const [h, m] = hora.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  // Función para mostrar el programa actual
+  function mostrarProgramaActual() {
+    const contenedor = document.querySelector('.days-container');
+    const ahora = new Date();
+    const opciones = { weekday: 'long' };
+    const diaActual = ahora.toLocaleDateString('es-ES', opciones).toLowerCase();
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+    
+    // Combinar todos los programas
+    const todosProgramas = [...scheduleProgramming.programasDiarios, ...scheduleProgramming.programasEspecificos];
+    
+    // Buscar el programa que está al aire ahora
+    let programaAlAire = null;
+    
+    for (const programa of todosProgramas) {
+      if (programa.dias.includes(diaActual)) {
+        const [horaInicio, horaFin] = programa.horario.split('-').map(h => h.trim());
+        const inicioMin = horaAMinutos(horaInicio);
+        const finMin = horaAMinutos(horaFin);
+        
+        if (minutosActuales >= inicioMin && minutosActuales <= finMin) {
+          programaAlAire = programa;
+          break;
+        }
+      }
+    }
+    
+    // Mostrar el programa o mensaje si no hay ninguno
+    if (programaAlAire) {
+      contenedor.innerHTML = `
+        <div class="day-box" 
+             data-program="${programaAlAire.nombre}" 
+             data-time="${programaAlAire.horario}">
+          <div class="day-bg-image" style="background-image: url('${programaAlAire.imagen}')"></div>
+          <div class="day-gradient"></div>
+          <div class="now-playing">
+            <div>
+              <span class="live-badge">VIVO</span>
+              <span>AHORA</span>
+            </div>
+            <div class="program-title">${programaAlAire.nombre}</div>
+            <div class="program-time">
+              <span>🕒</span>
+              <span>${programaAlAire.horario.replace('-', ' a ')}</span>
+            </div>
+            <div style="font-size:12px;margin-top:5px;">${diaActual.charAt(0).toUpperCase() + diaActual.slice(1)}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      contenedor.innerHTML = `
+        <div class="day-box">
+          <div class="day-bg-image" style="background-color: #000;"></div>
+          <div class="day-gradient"></div>
+          <div class="now-playing">
+            <div class="program-title">FUERA DE TRANSMISIÓN</div>
+            <div class="program-time">
+              <span>🕒</span>
+              <span>Vuelve durante nuestro horario</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Inicializar al cargar la página
+  document.addEventListener('DOMContentLoaded', mostrarProgramaActual);
+  setInterval(mostrarProgramaActual, 60000); // Actualizar cada minuto
+//]]>
+</script>
+
+<!-- Código Final Cover -->
+
+
+
+<!-- Código Inicia Cinta -->
+
+
+
+
+
+
+<div class="checheres-strip-container">
+  <div class="checheres-strip" id="programacion-strip">
+    <!-- Programa EN VIVO - Se actualizará automáticamente -->
+    <div class="programa-item">
+      <div class="badge-en-vivo">EN VIVO AHORA</div>
+      <div class="titulo-programa" id="titulo-actual">CARGANDO...</div>
+      <div class="horario-programa" id="horario-actual"></div>
+    </div>
+    
+    <div class="divisor-vertical"></div>
+    
+    <!-- A CONTINUACIÓN - Se actualizará automáticamente -->
+    <div class="programa-item">
+      <div class="badge-proximo">A CONTINUACIÓN</div>
+      <div class="titulo-programa" id="titulo-proximo"></div>
+      <div class="horario-programa" id="horario-proximo"></div>
+    </div>
+    
+    <!-- Resto de programas estáticos -->
+<!-- Lunes a Viernes -->
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">NOCHE ALTERNA</div>
+  <div class="horario-programa">Dom-Jue 22 a 24 hs</div>
+</div>
+
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">NOCHE CLÁSICA</div>
+  <div class="horario-programa">Lun-Vie 0 a 5 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">TIEMPO DE JAZZ AM</div>
+  <div class="horario-programa">Lun-Dom 5 a 6 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">MAÑANAS ROCK</div>
+  <div class="horario-programa">Lun-Vie 6 a 12 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">TIEMPO DE JAZZ PM</div>
+  <div class="horario-programa">Lun-Dom 12 a 13 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">TARDE INDIE</div>
+  <div class="horario-programa">Lun-Jue 13 a 21 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">RELATOS INESPERADOS</div>
+  <div class="horario-programa">Dom-Jue 21 a 22 hs</div>
+</div>
+
+
+
+<!-- Viernes adicional -->
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">ES VIERNES</div>
+  <div class="horario-programa">Vie 13 a 18 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DISCO MIX CLUB</div>
+  <div class="horario-programa">Vie 18 a 19 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">LA CUEVA DEL ROCK</div>
+  <div class="horario-programa">Vie 19 a 22 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DISCO MIX CLUB</div>
+  <div class="horario-programa">Vie 22 a 24 hs</div>
+</div>
+
+<!-- Sábados -->
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">NOCHE CLÁSICA</div>
+  <div class="horario-programa">Sáb-Dom 2 a 5 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DISCO MIX CLUB</div>
+  <div class="horario-programa">Sáb 0 a 2 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">SÁBADOS ROCK & POP</div>
+  <div class="horario-programa">Sáb 6 a 9 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">OLD SCHOOL HITS MIX</div>
+  <div class="horario-programa">Sáb-Dom 9 a 11 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">SÁBADOS ROCK & POP</div>
+  <div class="horario-programa">Sáb 11 a 12 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">OLD SCHOOL HITS MIX</div>
+  <div class="horario-programa">Sáb-Dom 13 a 15 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">SÁBADOS ROCK & POP</div>
+  <div class="horario-programa">Sáb 15 a 16 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">LA MAQUINA DEL TIEMPO</div>
+  <div class="horario-programa">Sáb 16 a 17 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">SÁBADOS ROCK & POP</div>
+  <div class="horario-programa">Sáb 17 a 19 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DISCO MIX CLUB</div>
+  <div class="horario-programa">Sáb 19 a 24 hs</div>
+</div>
+
+<!-- Domingos -->
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DISCO MIX CLUB</div>
+  <div class="horario-programa">Dom 0 a 2 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DOMINGOS ROCK & POP</div>
+  <div class="horario-programa">Dom 6 a 7 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DOMINGOS ROCK & POP</div>
+  <div class="horario-programa">Dom 11 a 12 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DOMINGOS ROCK & POP</div>
+  <div class="horario-programa">Dom 15 a 16 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">SUSPENDIDOS EN EL TIEMPO</div>
+  <div class="horario-programa">Dom 16 a 18 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">CAFÉ CLUB SN</div>
+  <div class="horario-programa">Dom 18 a 20 hs</div>
+</div>
+
+<div class="divisor-vertical"></div>
+<div class="programa-item">
+  <div class="titulo-programa">DOMINGOS ROCK & POP</div>
+  <div class="horario-programa">Dom 20 a 21 hs</div>
+</div>
+  
+  <!-- Flecha de desplazamiento -->
+  <div class="franja-flecha">
+    <div class="flecha-desplazamiento" onclick="desplazarStrip()">
+      <svg width="12" height="20" viewbox="0 0 12 20" fill="none">
+        <path d="M1 1L10 10L1 19" stroke="#101010" stroke-width="2"/>
+      </path></svg>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap');
+
+/* Contenedor principal */
+.checheres-strip-container {
+  width: 100%;
+  height: 80px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Cinta de programas */
+.checheres-strip {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: calc(100% - 50px);
+  white-space: nowrap;
+}
+.checheres-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Estilo de cada programa */
+.programa-item {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0 10px;
+  justify-content: center;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Badge "EN VIVO" */
+.badge-en-vivo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  background-color: #e94560;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 3px;
+  animation: parpadeo 1.5s infinite;
+  width: fit-content;
+}
+
+/* Badge "A CONTINUACIÓN" */
+.badge-proximo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e94560;
+  margin-bottom: 0;
+}
+
+/* Títulos y horarios */
+.titulo-programa {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  line-height: 0.9;
+  color: #101010;
+  margin-bottom: 0px;
+  white-space: nowrap;
+}
+.horario-programa {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #101010;
+  opacity: 0.8;
+  margin-top: -4px;
+  white-space: nowrap;
+}
+
+/* Divisor vertical */
+.divisor-vertical {
+  height: 80px;
+  width: 0.3px;
+  background: #101010;
+  margin: 0 10px;
+  opacity: 1;
+  flex-shrink: 0;
+}
+
+/* Franja de la flecha */
+.franja-flecha {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 50px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Flecha de desplazamiento */
+.flecha-desplazamiento {
+  cursor: pointer;
+  padding: 10px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flecha-desplazamiento:hover {
+  background: #e0e0e0;
+}
+
+/* Animación de parpadeo */
+@keyframes parpadeo {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+</style>
+
+<script>
+// Función para desplazar la cinta
+function desplazarStrip() {
+  document.getElementById("programacion-strip").scrollBy({
+    left: 200,
+    behavior: 'smooth'
+  });
+}
+
+(function() {
+  const programacion = [
+    { nombre: "TIEMPO DE JAZZ AM", horario: "05:00-06:00", dias: [0,1,2,3,4,5,6] },
+    { nombre: "MAÑANAS ROCK", horario: "06:00-12:00", dias: [1,2,3,4,5] },
+    { nombre: "TIEMPO DE JAZZ PM", horario: "12:00-13:00", dias: [0,1,2,3,4,5,6] },
+    { nombre: "TARDE INDIE", horario: "13:00-21:00", dias: [1,2,3,4] },
+    { nombre: "RELATOS INESPERADOS", horario: "21:00-22:00", dias: [0,1,2,3,4] },
+    { nombre: "SÁBADOS ROCK & POP", horario: "06:00-09:00", dias: [6] },
+    { nombre: "OLD SCHOOL HITS MIX", horario: "09:00-11:00", dias: [6,0] },
+    { nombre: "SÁBADOS ROCK & POP", horario: "11:00-12:00", dias: [6] },
+    { nombre: "DOMINGOS ROCK & POP", horario: "06:00-07:00", dias: [0] },
+    { nombre: "DOMINGOS ROCK & POP", horario: "11:00-12:00", dias: [0] },
+    { nombre: "DISCO MIX CLUB", horario: "18:00-19:00", dias: [5] },
+    { nombre: "DISCO MIX CLUB", horario: "22:00-24:00", dias: [5] },
+    { nombre: "DISCO MIX CLUB", horario: "00:00-02:00", dias: [6] },
+    { nombre: "DISCO MIX CLUB", horario: "19:00-24:00", dias: [6] },
+    { nombre: "DISCO MIX CLUB", horario: "00:00-02:00", dias: [0] },
+    { nombre: "ES VIERNES", horario: "13:00-18:00", dias: [5] },
+    { nombre: "SÁBADOS ROCK & POP", horario: "15:00-16:00", dias: [6] },
+    { nombre: "SÁBADOS ROCK & POP", horario: "17:00-19:00", dias: [6] },
+    { nombre: "DOMINGOS ROCK & POP", horario: "15:00-16:00", dias: [0] },
+{ nombre: "CAFÉ CLUB SN", horario: "18:00-20:00", dias: [0] },
+    { nombre: "DOMINGOS ROCK & POP", horario: "20:00-21:00", dias: [0] },
+    { nombre: "NOCHE ALTERNA", horario: "22:00-24:00", dias: [0,1,2,3,4] },
+    { nombre: "NOCHE CLÁSICA", horario: "00:00-05:00", dias: [1,2,3,4,5] },
+    { nombre: "NOCHE CLÁSICA", horario: "02:00-05:00", dias: [6,0] },
+    { nombre: "LA CUEVA DEL ROCK", horario: "19:00-22:00", dias: [5] },
+    { nombre: "LA MAQUINA DEL TIEMPO", horario: "16:00-17:00", dias: [6] },
+    { nombre: "SUSPENDIDOS EN EL TIEMPO", horario: "16:00-18:00", dias: [0] },
+    { nombre: "OLD SCHOOL HITS MIX", horario: "13:00-15:00", dias: [6,0] }
+  ];
+
+  function convertirHoraAMinutos(horaStr) {
+    const [horas, minutos] = horaStr.split(':').map(Number);
+    return horas * 60 + minutos;
+  }
+
+  function ordenarProgramas(programas) {
+    return programas.sort((a, b) => {
+      const horaInicioA = convertirHoraAMinutos(a.horario.split('-')[0]);
+      const horaInicioB = convertirHoraAMinutos(b.horario.split('-')[0]);
+      return horaInicioA - horaInicioB;
+    });
+  }
+
+  
+
+
+
+    
+    
+    
+ function actualizarProgramacion() {
+    const ahora = new Date();
+    const diaSemana = ahora.getDay();
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+    
+    // Obtener programas de hoy y mañana
+    let programasHoy = programacion.filter(prog => prog.dias.includes(diaSemana));
+    const diaSiguiente = (diaSemana + 1) % 7;
+    let programasManana = programacion.filter(prog => prog.dias.includes(diaSiguiente));
+    
+    // Combinar programas de hoy con programas de madrugada de mañana
+    const programasCombinados = [...programasHoy];
+    
+    // Agregar programas del día siguiente que empiezan antes de las 6am (considerarlos como extensión de la noche)
+    programasManana.forEach(prog => {
+        const horaInicio = convertirHoraAMinutos(prog.horario.split('-')[0]);
+        if (horaInicio < 6 * 60) { // Programas que empiezan antes de las 6am
+            programasCombinados.push(prog);
+        }
+    });
+    
+    programasCombinados.sort((a, b) => {
+        const horaInicioA = convertirHoraAMinutos(a.horario.split('-')[0]);
+        const horaInicioB = convertirHoraAMinutos(b.horario.split('-')[0]);
+        return horaInicioA - horaInicioB;
+    });
+    
+    if (programasCombinados.length === 0) {
+        document.getElementById('titulo-actual').textContent = "SIN PROGRAMACIÓN";
+        document.getElementById('horario-actual').textContent = "Hoy no hay programas";
+        document.getElementById('titulo-proximo').textContent = "";
+        document.getElementById('horario-proximo').textContent = "";
+        return;
+    }
+    
+    let programaActual = null;
+    let programaProximo = null;
+    
+    // Buscar programa actual
+    for (const programa of programasCombinados) {
+        const [inicioStr, finStr] = programa.horario.split('-');
+        const inicioMin = convertirHoraAMinutos(inicioStr);
+        let finMin = convertirHoraAMinutos(finStr);
+        
+        // Ajustar para programas que cruzan medianoche
+        if (finMin <= inicioMin) finMin += 24 * 60;
+        
+        let minutosActualesAjustados = minutosActuales;
+        if (minutosActuales < inicioMin) minutosActualesAjustados += 24 * 60;
+        
+        if (minutosActualesAjustados >= inicioMin && minutosActualesAjustados < finMin) {
+            programaActual = programa;
+            break;
+        }
+    }
+    
+    // Buscar próximo programa
+    if (programaActual) {
+        const currentIndex = programasCombinados.indexOf(programaActual);
+        programaProximo = programasCombinados[(currentIndex + 1) % programasCombinados.length];
+        
+        // Verificar si el próximo programa es del día siguiente
+        if (!programaProximo.dias.includes(diaSemana)) {
+            // Si es del día siguiente, verificar si hay programas más tempranos en el día actual
+            const programasRestantesHoy = programasCombinados.slice(currentIndex + 1).filter(p => p.dias.includes(diaSemana));
+            if (programasRestantesHoy.length > 0) {
+                programaProximo = programasRestantesHoy[0];
+            }
+        }
+    } else {
+        // Si no hay programa actual, buscar el primero que empiece después de ahora
+        for (const programa of programasCombinados) {
+            const inicioMin = convertirHoraAMinutos(programa.horario.split('-')[0]);
+            if (minutosActuales < inicioMin || inicioMin === 0) {
+                programaProximo = programa;
+                break;
+            }
+        }
+    }
+    
+    // Si no encontramos próximo, tomar el primero del día siguiente
+    if (!programaProximo) {
+      const diaSiguiente = (diaSemana + 1) % 7;
+      const programasManana = programacion.filter(prog => prog.dias.includes(diaSiguiente));
+      if (programasManana.length > 0) {
+        programaProximo = ordenarProgramas(programasManana)[0];
+      }
+    }
+    
+    // Actualizar UI
+    if (programaActual) {
+      document.getElementById('titulo-actual').textContent = programaActual.nombre;
+      document.getElementById('horario-actual').textContent = `${formatearDias(programaActual.dias)} ${programaActual.horario} hs`;
+    } else {
+      document.getElementById('titulo-actual').textContent = "FUERA DE PROGRAMACIÓN";
+      document.getElementById('horario-actual').textContent = ahora.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    
+    if (programaProximo) {
+      document.getElementById('titulo-proximo').textContent = programaProximo.nombre;
+      document.getElementById('horario-proximo').textContent = `${formatearDias(programaProximo.dias)} ${programaProximo.horario} hs`;
+    } else {
+      document.getElementById('titulo-proximo').textContent = "";
+      document.getElementById('horario-proximo').textContent = "";
+    }
+  }
+
+  function formatearDias(dias) {
+    const nombresDias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    
+    if (dias.length === 7) return 'Lun-Dom';
+    
+    if (dias.length === 5 && 
+        dias.includes(1) && dias.includes(2) && dias.includes(3) && 
+        dias.includes(4) && dias.includes(5)) {
+      return 'Lun-Vie';
+    }
+    
+    if (dias.length === 4 && 
+        dias.includes(0) && dias.includes(1) && dias.includes(2) && dias.includes(3)) {
+      return 'Dom-Jue';
+    }
+    
+    return dias.map(d => nombresDias[d]).join('/');
+  }
+
+  // Iniciar
+  document.addEventListener('DOMContentLoaded', function() {
+    actualizarProgramacion();
+    setInterval(actualizarProgramacion, 60000);
+  });
+})();
+</script></div>
+
+
+
+<!-- Código Final Cinta -->
+
+
+
+
+
+
+
+
+
+<!-- Código Inicia Programación  -->
+
+
+
+<!-- Banner TU GUÍA AL AIRE con Popup -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  .banner-programacion {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #101010;
+    color: #fff;
+    padding: 18.75px 20px; /* 25% más que 15px */
+    font-size: 47px; /* 40% más que 33px */
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 2px solid #e94560;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.3s;
+  }
+
+  .banner-programacion:hover {
+    background-color: #1a1a1a;
+  }
+
+  .banner-programacion-icon {
+    color: #e94560;
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  @media (max-width: 768px) {
+    .banner-programacion {
+      font-size: 17px;
+      padding-top: 18.75px;
+      padding-bottom: 18.75px;
+    }
+
+    .banner-programacion-icon {
+      font-size: 18px;
+    }
+  }
+</style>
+
+<div class="banner-programacion"
+     onclick="window.open('https://vivo.radiochecheres.com/', 'popup', 'left=500,top=50,width=470,height=900,toolbar=0,resizable=1')"
+     title="Para Internet de Baja Velocidad">
+  MIRÁ TU PROGRAMACIÓN EN VIVO <span class="banner-programacion-icon">▶</span>
+</div>
+
+
+
+<!-- Código Final Programación  -->
