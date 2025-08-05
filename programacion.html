@@ -1133,54 +1133,568 @@ function desplazarStrip() {
 
 
 
-<!-- Banner TU GUÍA AL AIRE con Popup -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<div id="radio-checheres-schedule">
+<style>
+    /* Restringe la fuente SOLO al widget */
+    #radio-checheres-schedule,
+    #radio-checheres-schedule * {
+        font-family: 'Montserrat', sans-serif !important;
+    
+    #radio-checheres-schedule {
+        font-family: 'Montserrat', sans-serif;
+        max-width: 100%;
+        background-color: #101010;
+        color: white;
+        border-radius: 0px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        margin-bottom: 20px;
+    }
+    
+    .rcs-toggle {
+        background-color: #101010;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border-bottom: 2px solid #e94560;
+    }
+    
+    .rcs-toggle-title {
+        font-size: 33px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+    }
+    
+    .rcs-toggle-icon {
+        transition: transform 0.3s ease;
+        font-size: 20px;
+        color: #e94560;
+    }
+    
+    .rcs-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+    }
+    
+    .rcs-content.expanded {
+        max-height: 3000px;
+    }
+    
+    .rcs-header {
+        background-color: #101010;
+        padding: 12px 15px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .rcs-day-navigation {
+        display: flex;
+        gap: 3px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        scrollbar-width: none;
+    }
+    
+    .rcs-day-navigation::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .rcs-day-tab {
+        padding: 5px 10px;
+        font-size: 17px;
+        font-weight: 600;
+        background-color: #252525;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: white;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .rcs-day-tab:hover, .rcs-day-tab.active {
+        background-color: #e94560;
+    }
+    
+    .rcs-container {
+        padding: 15px;
+    }
+    
+    .rcs-day-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #e94560;
+        text-align: center;
+    }
+    
+    .rcs-program-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .rcs-program-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #252525;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .rcs-program-item.current {
+        background-color: #e94560;
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(233, 69, 96, 0.3);
+    }
+    
+    .rcs-program-item.current::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: white;
+    }
+    
+    .rcs-program-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        object-fit: cover;
+        margin-right: 12px;
+        border: 1px solid #333;
+    }
+    
+    .rcs-program-info {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .rcs-program-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .rcs-program-time {
+        font-size: 12px;
+        color: #ccc;
+        font-weight: 500;
+    }
+    
+    .rcs-current-badge {
+        background-color: white;
+        color: #e94560;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: 8px;
+        display: inline-block;
+        animation: rcs-pulse 1.5s infinite;
+    }
+    
+    @keyframes rcs-pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.8; }
+        100% { opacity: 1; }
+    }
+    
+    @media (max-width: 768px) {
+        .rcs-toggle {
+            padding: 12px 15px;
+        }
+        
+        .rcs-toggle-title {
+            font-size: 16px;
+        }
+        
+        .rcs-day-tab {
+            padding: 5px 8px;
+            font-size: 15px;
+        }
+        
+        .rcs-program-image {
+            width: 50px;
+            height: 50px;
+        }
+    }
+</style>
+
+<div class="rcs-toggle" id="rcs-toggle">
+    <h3 class="rcs-toggle-title">VER PROGRAMACIÓN ▼</h3>
+    <div class="rcs-toggle-icon">▼</div>
+</div>
+
+<div class="rcs-content" id="rcs-content">
+    <div class="rcs-header">
+        <div class="rcs-day-navigation">
+            <div class="rcs-day-tab" data-day="1">LUN</div>
+            <div class="rcs-day-tab" data-day="2">MAR</div>
+            <div class="rcs-day-tab" data-day="3">MIÉ</div>
+            <div class="rcs-day-tab" data-day="4">JUE</div>
+            <div class="rcs-day-tab" data-day="5">VIE</div>
+            <div class="rcs-day-tab" data-day="6">SÁB</div>
+            <div class="rcs-day-tab" data-day="0">DOM</div>
+        </div>
+    </div>
+
+    <div class="rcs-container">
+        <h4 class="rcs-day-title" id="rcs-current-day-title">LUNES</h4>
+        <div class="rcs-program-list" id="rcs-program-list">
+            <!-- Los programas se cargarán aquí dinámicamente -->
+        </div>
+    </div>
+</div>
+
+<script>
+// Namespace para evitar conflictos
+window.RadioChecheresSchedule = (function() {
+    // Programación de la radio
+    const programacion = [
+        { 
+            nombre: "Noche Clásica", 
+            horario: "00:00-05:00", 
+            dias: [1,2,3,4,5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiEfL_9rrLq5OOjJqRbvO14kHrgywA1cfe3ghH_0L4RZCCmD9t2lrUEV7Pp6Q_WWDxWPlIIvrN28FOpcm4VJ9FMgIKI3-AhPOwAD0OFUHjsrdIvOJ9U6wQ9CeA_7m0gdRkt5HVU1L9-3hP6mf71aHXi5eZdI2h2N91k52mvjOMRkGxLQUM1UjHUkrStHg0" 
+        },
+        { 
+            nombre: "Tiempo de Jazz AM", 
+            horario: "05:00-06:00", 
+            dias: [0,1,2,3,4,5,6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEgLOU3MQpZnZF_eZx1ehwbUPSIwUsrnIKk3s9MJF-An8YJToxjtMTDZnKuqPWOR7GD3IU5hR_4_uYRZDn6YDVS9gcGVsc3iX7uP0hyZlls9lsRSXlNsO8sPGcc1FQpBBDBLnzHYLCewvDNIr2I_kiQ42gzMMe-6RrXAx6e50y3Ar1IjieDZCZpihKQI7Y0" 
+        },
+        { 
+            nombre: "Mañanas y Rock", 
+            horario: "06:00-12:00", 
+            dias: [1,2,3,4,5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjGr-BuuqSwQAdEerwNe4bsbsEv2hob4blHd8g3YvyLSeXLpE0Gq7EWndVI7LM2WBx57iV26WgmS7NY5m5iEblJCPlwiJO0B_IWv0jsplSnN6o6QywwLswhX2fLHlbfZPkV8oC23o1VMIQejwnkQqx81tY0eEGXRs0eKeyoTngBt723pAnaB0HaG2jbimQ"
+        },
+        { 
+            nombre: "Tiempo de Jazz PM", 
+            horario: "12:00-13:00", 
+            dias: [0,1,2,3,4,5,6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEgLOU3MQpZnZF_eZx1ehwbUPSIwUsrnIKk3s9MJF-An8YJToxjtMTDZnKuqPWOR7GD3IU5hR_4_uYRZDn6YDVS9gcGVsc3iX7uP0hyZlls9lsRSXlNsO8sPGcc1FQpBBDBLnzHYLCewvDNIr2I_kiQ42gzMMe-6RrXAx6e50y3Ar1IjieDZCZpihKQI7Y0"
+        },
+        { 
+            nombre: "Tarde Indie", 
+            horario: "13:00-21:00", 
+            dias: [1,2,3,4],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+        { 
+            nombre: "Relatos Inesperados", 
+            horario: "21:00-22:00", 
+            dias: [0,1,2,3,4],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEivrH8whK7M0kJ3Sw29ozDbnJNmAgZXRMet6s8YS2z7JF8SSPxpcjwu28ZINnXVreTpY68Knse1bX0lUndQnQTvRVQA6Ri--OCAJC8lEbCIhdvITurd98r41TqAQfBVlElHB3KKWavLxXAH-mQwvXKiFlrZrgept1vngZT1jMNPQHX7ZqfErbNsAEsSezI"
+        },
+        { 
+            nombre: "Noche Alterna", 
+            horario: "22:00-24:00", 
+            dias: [0,1,2,3,4],
+            cover: "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/night-landscape-lilia-d.jpg"
+        },
+        { 
+            nombre: "Es Viernes", 
+            horario: "13:00-18:00", 
+            dias: [5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+        { 
+            nombre: "Disco Mix Club", 
+            horario: "18:00-19:00", 
+            dias: [5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiAZdpOz7uFa2q41w-nP8vklTs0PI_A6xnbi9_RuKA0gJsTWUo-B6kUscpTmyInaYt5Kwi2hJP7PSho7_BZYJqSdOZOv0hcbVUSeGjOPFjPIwcgT2JBVT_kdJVpk-GxNQFhBqLVEYG3HtY8BeQe_uHO55SLC5HUI3ZC-afwvJ5RTzaJCT_HGuSk0n_mhh4"
+        },
+        { 
+            nombre: "La Cueva del Rock", 
+            horario: "19:00-22:00", 
+            dias: [5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEgJTcIeaRhECN28SQTtz35-OmMPgHNqz39Xhldo6fLteBBDqvhVQeimIoFrv_ADcuAm8NtG905ghL_ztHdh1xZnFKqK1Ht5-Wksw9tIvaiqlnevQM8ECLnoDnS1cQmgmiCLBNJlnNHaQblFGKIIGBWy_CWCXPMICb00VbzwKDK88IU_A_w1lUdUcQrZFBc"
+        },
+        { 
+            nombre: "Disco Mix Club", 
+            horario: "22:00-24:00", 
+            dias: [5],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiAZdpOz7uFa2q41w-nP8vklTs0PI_A6xnbi9_RuKA0gJsTWUo-B6kUscpTmyInaYt5Kwi2hJP7PSho7_BZYJqSdOZOv0hcbVUSeGjOPFjPIwcgT2JBVT_kdJVpk-GxNQFhBqLVEYG3HtY8BeQe_uHO55SLC5HUI3ZC-afwvJ5RTzaJCT_HGuSk0n_mhh4"
+        },
+        { 
+            nombre: "Noche Clásica", 
+            horario: "02:00-05:00", 
+            dias: [6,0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiEfL_9rrLq5OOjJqRbvO14kHrgywA1cfe3ghH_0L4RZCCmD9t2lrUEV7Pp6Q_WWDxWPlIIvrN28FOpcm4VJ9FMgIKI3-AhPOwAD0OFUHjsrdIvOJ9U6wQ9CeA_7m0gdRkt5HVU1L9-3hP6mf71aHXi5eZdI2h2N91k52mvjOMRkGxLQUM1UjHUkrStHg0"
+        },
+        { 
+            nombre: "Disco Mix Club", 
+            horario: "00:00-02:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiAZdpOz7uFa2q41w-nP8vklTs0PI_A6xnbi9_RuKA0gJsTWUo-B6kUscpTmyInaYt5Kwi2hJP7PSho7_BZYJqSdOZOv0hcbVUSeGjOPFjPIwcgT2JBVT_kdJVpk-GxNQFhBqLVEYG3HtY8BeQe_uHO55SLC5HUI3ZC-afwvJ5RTzaJCT_HGuSk0n_mhh4"
+        },
+        { 
+            nombre: "Sábados Rock & Pop", 
+            horario: "06:00-09:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjGr-BuuqSwQAdEerwNe4bsbsEv2hob4blHd8g3YvyLSeXLpE0Gq7EWndVI7LM2WBx57iV26WgmS7NY5m5iEblJCPlwiJO0B_IWv0jsplSnN6o6QywwLswhX2fLHlbfZPkV8oC23o1VMIQejwnkQqx81tY0eEGXRs0eKeyoTngBt723pAnaB0HaG2jbimQ"
+        },
+        { 
+            nombre: "Old School Hits Mix", 
+            horario: "09:00-11:00", 
+            dias: [6,0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEhWmJxySATzcuLU3YmFqoP012PeFiMX21NcALhraE51cJiQnp3A0ESnzA3ci6VsHtvUTiKkkEm9WQXwC3PL0GpMNJNYgrJBBMVWlbUJqL0kb8S9f2KGWhYI0AdG3kmkk5FuwOQ-vTq_YzSbIgwa3rjmdYP1RsVNdqsUVyYIomDE4a5_IlcMTPLOnEvvWXk"
+        },
+        { 
+            nombre: "Sábados Rock", 
+            horario: "11:00-12:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjGr-BuuqSwQAdEerwNe4bsbsEv2hob4blHd8g3YvyLSeXLpE0Gq7EWndVI7LM2WBx57iV26WgmS7NY5m5iEblJCPlwiJO0B_IWv0jsplSnN6o6QywwLswhX2fLHlbfZPkV8oC23o1VMIQejwnkQqx81tY0eEGXRs0eKeyoTngBt723pAnaB0HaG2jbimQ"
+        },
+        { 
+            nombre: "Old School Hits Mix", 
+            horario: "13:00-15:00", 
+            dias: [6,0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEhWmJxySATzcuLU3YmFqoP012PeFiMX21NcALhraE51cJiQnp3A0ESnzA3ci6VsHtvUTiKkkEm9WQXwC3PL0GpMNJNYgrJBBMVWlbUJqL0kb8S9f2KGWhYI0AdG3kmkk5FuwOQ-vTq_YzSbIgwa3rjmdYP1RsVNdqsUVyYIomDE4a5_IlcMTPLOnEvvWXk"
+        },
+        { 
+            nombre: "Sábados Rock & Pop", 
+            horario: "15:00-16:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+        { 
+            nombre: "La Máquina del Tiempo", 
+            horario: "16:00-17:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiFMOhOoofjA5NboXbvLLdJggwS9_v84OPqpKWHc_7xRyUTURFu2gR88hfj0-QeT1ruWR-TKuY9K5dZ6z3W_r_w8-KffSWPuqBAIfBwqo4WkBXntyT3JswuOz0wOa5sO2gdUc7UBrdmECnlv69jPAHk7CjJuUlWLGeh1siD6TCeQKBzs6e_FlQ4PgBTvbQ"
+        },
+        { 
+            nombre: "Sábados Rock & Pop", 
+            horario: "17:00-19:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+        { 
+            nombre: "Disco Mix Club", 
+            horario: "19:00-24:00", 
+            dias: [6],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiAZdpOz7uFa2q41w-nP8vklTs0PI_A6xnbi9_RuKA0gJsTWUo-B6kUscpTmyInaYt5Kwi2hJP7PSho7_BZYJqSdOZOv0hcbVUSeGjOPFjPIwcgT2JBVT_kdJVpk-GxNQFhBqLVEYG3HtY8BeQe_uHO55SLC5HUI3ZC-afwvJ5RTzaJCT_HGuSk0n_mhh4"
+        },
+        { 
+            nombre: "Disco Mix Club", 
+            horario: "00:00-02:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiAZdpOz7uFa2q41w-nP8vklTs0PI_A6xnbi9_RuKA0gJsTWUo-B6kUscpTmyInaYt5Kwi2hJP7PSho7_BZYJqSdOZOv0hcbVUSeGjOPFjPIwcgT2JBVT_kdJVpk-GxNQFhBqLVEYG3HtY8BeQe_uHO55SLC5HUI3ZC-afwvJ5RTzaJCT_HGuSk0n_mhh4"
+        },
+        { 
+            nombre: "Domingos Rock & Pop", 
+            horario: "06:00-07:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjGr-BuuqSwQAdEerwNe4bsbsEv2hob4blHd8g3YvyLSeXLpE0Gq7EWndVI7LM2WBx57iV26WgmS7NY5m5iEblJCPlwiJO0B_IWv0jsplSnN6o6QywwLswhX2fLHlbfZPkV8oC23o1VMIQejwnkQqx81tY0eEGXRs0eKeyoTngBt723pAnaB0HaG2jbimQ"
+        },
+        { 
+            nombre: "Domingos Rock & Pop", 
+            horario: "11:00-12:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjGr-BuuqSwQAdEerwNe4bsbsEv2hob4blHd8g3YvyLSeXLpE0Gq7EWndVI7LM2WBx57iV26WgmS7NY5m5iEblJCPlwiJO0B_IWv0jsplSnN6o6QywwLswhX2fLHlbfZPkV8oC23o1VMIQejwnkQqx81tY0eEGXRs0eKeyoTngBt723pAnaB0HaG2jbimQ"
+        },
+        { 
+            nombre: "Domingos Rock & Pop", 
+            horario: "15:00-16:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        },
+        { 
+            nombre: "Suspendidos en el Tiempo", 
+            horario: "16:00-18:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEhEgFzwZa0PDIoBRStjuGGTD75nj0Xt0JpfdceS847QManDFn4dUFGvmXGxRBaop0kgV9pxqw0JL4I4KWq1lTl6y6m5Eg5AnmZOe7zsAT7QU1OM9sqYvEN1Z7BRBetvHVGeoSwfj0VUI-fz57Zn1Jj2y6Ze5pm1TWlbBOMHXsepUZKyzwZU4GCED9nGGVc"
+        },
+
+     { 
+            nombre: "Café Club SN", 
+            horario: "18:00-20:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEjqEZOvoELt1Lvm7NcozwC2OfmILxOzHQ_01_9wISH9i7IPeuf5Qd6SARNoVU70MIEFK_OKX6j3_J2Gnyr_M7WOWTWFLrs3QIcaCsl3rdqZ7ACElnbNAF8QyOPsNPMlNTR6JpjYk9FoNYb7zv6Dl0r3Yr9sNs3ots-aogcbzcS6bVNANSH5xIoSxZYcFrE"
+        },
+
+     { 
+            nombre: "Domingos Rock & Pop", 
+            horario: "20:00-21:00", 
+            dias: [0],
+            cover: "https://blogger.googleusercontent.com/img/a/AVvXsEiuspN5eu7Q7KwbR13ANd6Hvj4X4gEX49zWYar75TzsDQ96KK9XVL_t_Gi181fJDY-Ubb4HefjsiMtA6KtqhM-1OETGpPeZkooZL1dWenq_zQd3duCwYytu3w31ZrZLnNnW7djTzqo2Wys1pImjUFNa5nYa37hXepW1vh70X_zE800ljkzB6vHxutZp-TQ"
+        }
+    ];
+
+    // Nombres de los días
+    const dayNames = {
+        0: "DOMINGO",
+        1: "LUNES",
+        2: "MARTES",
+        3: "MIÉRCOLES",
+        4: "JUEVES",
+        5: "VIERNES",
+        6: "SÁBADO"
+    };
+
+    // Función para cargar la programación de un día específico
+    function loadSchedule(day) {
+        const now = new Date();
+        const currentDay = now.getDay();
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes();
+        const currentTime = currentHour * 100 + currentMinutes;
+        
+        // Filtrar programas para el día seleccionado
+        const dayPrograms = programacion.filter(prog => prog.dias.includes(day));
+        
+        // Ordenar los programas por hora de inicio
+        dayPrograms.sort((a, b) => {
+            const [aStart] = a.horario.split('-').map(time => {
+                const [h, m] = time.split(':').map(Number);
+                return h * 100 + m;
+            });
+            const [bStart] = b.horario.split('-').map(time => {
+                const [h, m] = time.split(':').map(Number);
+                return h * 100 + m;
+            });
+            return aStart - bStart;
+        });
+        
+        // Actualizar el título del día
+        document.getElementById('rcs-current-day-title').textContent = dayNames[day];
+        
+        // Limpiar la lista de programas
+        const programList = document.getElementById('rcs-program-list');
+        programList.innerHTML = '';
+        
+        // Agregar cada programa a la lista
+        dayPrograms.forEach(program => {
+            const [startTime, endTime] = program.horario.split('-');
+            const [startHour, startMinute] = startTime.split(':').map(Number);
+            const [endHour, endMinute] = endTime.split(':').map(Number);
+            const startTimeNum = startHour * 100 + startMinute;
+            const endTimeNum = endHour * 100 + endMinute;
+            
+            // Determinar si este es el programa actual
+            let isCurrent = false;
+            if (day === currentDay) {
+                if (endTimeNum < startTimeNum) {
+                    // Programa que cruza la medianoche
+                    isCurrent = currentTime >= startTimeNum || currentTime < endTimeNum;
+                } else {
+                    // Programa normal
+                    isCurrent = currentTime >= startTimeNum && currentTime < endTimeNum;
+                }
+            }
+            
+            // Crear elemento del programa
+            const programItem = document.createElement('div');
+            programItem.className = `rcs-program-item ${isCurrent ? 'current' : ''}`;
+            
+            programItem.innerHTML = `
+                <img src="${program.cover}" alt="${program.nombre}" class="rcs-program-image">
+                <div class="rcs-program-info">
+                    <div class="rcs-program-name">
+                        ${program.nombre}
+                        ${isCurrent ? '<span class="rcs-current-badge">EN VIVO</span>' : ''}
+                    </div>
+                    <div class="rcs-program-time">${startTime} - ${endTime}</div>
+                </div>
+            `;
+            
+            programList.appendChild(programItem);
+        });
+        
+        // Actualizar pestañas activas
+        document.querySelectorAll('.rcs-day-tab').forEach(tab => {
+            tab.classList.toggle('active', parseInt(tab.dataset.day) === day);
+        });
+    }
+    
+    // Función para el acordeón
+   const toggleAccordion = function() {
+        const content = document.getElementById('rcs-content');
+        const toggle = document.getElementById('rcs-toggle');
+        const icon = toggle.querySelector('.rcs-toggle-icon');
+        
+        content.classList.toggle('expanded');
+        
+        if (content.classList.contains('expanded')) {
+            toggle.querySelector('.rcs-toggle-title').textContent = 'TU PROGRAMACIÓN \u25B2';
+            icon.textContent = '\u25B2';
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            toggle.querySelector('.rcs-toggle-title').textContent = 'VER PROGRAMACIÓN \u25BC';
+            icon.textContent = '\u25BC';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    };
+    
+    return {
+        init: function() {
+            const today = new Date().getDay();
+            this.loadSchedule(today);
+            
+            // Configurar evento para el acordeón
+            document.getElementById('rcs-toggle').addEventListener('click', toggleAccordion);
+            
+            // Configurar eventos para las pestañas de días
+            document.querySelectorAll('.rcs-day-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const day = parseInt(tab.dataset.day);
+                    this.loadSchedule(day);
+                });
+            });
+            
+            setInterval(() => {
+                const today = new Date().getDay();
+                if (document.querySelector('.rcs-day-tab.active').dataset.day == today) {
+                    this.loadSchedule(today);
+                }
+            }, 60000);
+        },
+        
+        loadSchedule: loadSchedule
+    };
+})();
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    RadioChecheresSchedule.init();
+});
+</script>
+
+
+
 
 <style>
-  .banner-programacion {
-    font-family: 'Montserrat', sans-serif;
+  /* Fondo negro completo para toda la pantalla */
+  #radio-checheres-schedule {
     background-color: #101010;
-    color: #fff;
-    padding: 18.75px 20px; /* 25% más que 15px */
-    font-size: 47px; /* 40% más que 33px */
-    font-weight: 700;
-    text-align: center;
-    cursor: pointer;
-    border-bottom: 2px solid #e94560;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    transition: background-color 0.3s;
   }
 
-  .banner-programacion:hover {
-    background-color: #1a1a1a;
-  }
-
-  .banner-programacion-icon {
-    color: #e94560;
-    font-size: 26px;
-    line-height: 1;
-  }
-
-  @media (max-width: 768px) {
-    .banner-programacion {
-      font-size: 17px;
-      padding-top: 18.75px;
-      padding-bottom: 18.75px;
-    }
-
-    .banner-programacion-icon {
-      font-size: 18px;
+  /* Contenedor interno centrado a 1230px solo en desktop */
+  @media (min-width: 992px) {
+    #radio-checheres-schedule > div {
+      width: 1230px;
+      max-width: 1230px;
+      margin: 0 auto;
     }
   }
 </style>
 
-<div class="banner-programacion"
-     onclick="window.open('https://vivo.radiochecheres.com/', 'popup', 'left=500,top=50,width=470,height=900,toolbar=0,resizable=1')"
-     title="Para Internet de Baja Velocidad">
-  MIRÁ TU PROGRAMACIÓN EN VIVO <span class="banner-programacion-icon">▶</span>
 </div>
 
 
